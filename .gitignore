@@ -1,0 +1,7 @@
+bin/
+obj/
+_ref/
+publish/
+单文件/
+.vs/
+*.user

@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/DeskSign.Core/DeskSign.Core.csproj" />
+  <Project Path="src/DeskSign/DeskSign.csproj" />
+  <Project Path="tests/DeskSign.Tests/DeskSign.Tests.csproj" />
+</Solution>
