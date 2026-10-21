@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>桌签生成器</title>
-  <meta name="description" content="专为会议、接待和培训场景设计，支持批量导入名单，一键生成双面正向显示的桌签，告别在 Word 里逐页手动修改的繁琐操作。">
+  <meta name="description" content="会议、接待、培训必备，一键生成双面桌签，告别 Word 逐页修改。">
   <style>
     :root {
       --bg: #f7f4ee;
@@ -78,6 +78,7 @@
       line-height: 1.25;
       letter-spacing: 0.03em;
     }
+    .banner { margin: 12px 0 0; color: var(--green); font-size: 15px; letter-spacing: 0.04em; }
     .hero p { margin: 18px 0 0; max-width: 28em; color: var(--text); font-size: 17px; }
     .stage { margin: 0; background: var(--stage); border-radius: 18px; overflow: hidden; }
     .hero h1 { animation: rise .7s ease both; }
@@ -137,6 +138,48 @@
     .specs span { color: var(--muted); font-size: 13px; }
 
     .use { margin-top: 64px; }
+    .feats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .feats li {
+      margin: 0;
+      padding: 18px 18px 16px;
+      background: var(--card);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 15px;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .feats li:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(55, 40, 18, 0.08); }
+    .feats strong { display: block; margin-bottom: 6px; color: var(--ink); font-size: 16px; }
+    .scenes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .scenes li {
+      margin: 0;
+      padding: 10px 16px;
+      background: var(--card);
+      border-radius: 999px;
+      font-size: 15px;
+    }
+    .close { margin-top: 56px; }
+    .close h2 {
+      font-family: SimSun, "Songti SC", "Noto Serif SC", serif;
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+    .close p { margin: 10px 0 0; color: var(--text); font-size: 16px; }
     .steps {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -207,7 +250,7 @@
     @media (max-width: 860px) {
       .wrap { width: calc(100% - 32px); }
       header { height: auto; padding: 18px 0; align-items: flex-start; flex-direction: column; }
-      .hero, .split, .specs, .steps { grid-template-columns: 1fr; }
+      .hero, .split, .specs, .steps, .feats { grid-template-columns: 1fr; }
       h1 { font-size: 36px; }
       .oss { flex-direction: column; align-items: flex-start; }
     }
@@ -235,10 +278,12 @@
       </div>
     </header>
 
+    <p class="banner">会议、接待、培训必备，一键生成双面桌签，告别 Word 逐页修改</p>
     <section class="hero">
       <div>
-        <h1>一份名单，<br>印出所有人的桌签。</h1>
-        <p>专为会议、接待和培训场景设计，支持批量导入名单，一键生成双面正向显示的桌签，告别在 Word 里逐页手动修改的繁琐操作。</p>
+        <h1>还在为制作桌签<br>而烦恼？</h1>
+        <p>每次开会、接待客户或组织培训，桌上都要摆放姓名牌。用 Word 一页页修改名字，不仅效率低，还容易出错。纸比透明夹子大，排版调整更是费时费力。</p>
+        <p>现在，只需一步，全部搞定。将名单导入工具，即可一次性生成所有桌签。每张桌签两面均为正向显示的同一姓名，打印后对折放入夹子即可使用。</p>
       </div>
       <figure class="stage">
         <img src="docs/sign.png" alt="折好放进透明夹后的桌签">
@@ -252,17 +297,24 @@
       <figcaption class="caption">生成之前可以看这一页，也可以切换到立体，看纸怎么折进夹子。</figcaption>
     </figure>
 
-    <section class="split reveal">
-      <div>
-        <h2>印出来是什么样</h2>
-        <p>一页一个人，A4 纵向，页边距为零。上半页的名字旋转 180 度，下半页正着放。沿页中对折后，对面看到的也是正的。</p>
-        <p>姓名外侧有两条灰色虚线，会印出来，那就是折进夹子的位置。页中间的对折痕迹只在预览里，不写进文档。虚线以外不印名字，折进去的是空白。</p>
-      </div>
-      <div>
-        <h2>虚线跟着夹子走</h2>
-        <p>常见的透明桌签夹装不下一整张 A4，夹子还有大有小。把虚线移近或移远，折进去的边就跟着变。虚线在哪里，就从哪里折。</p>
-        <p>名单是一份文本，一行一个名字，UTF-8 和 GBK 都可以。程序直接写成文档，打印即可，不用先打开 Word。</p>
-      </div>
+    <section class="use reveal">
+      <h2>核心功能</h2>
+      <ul class="feats">
+        <li><strong>批量导入</strong>直接粘贴或导入名单，一行一个名字，一次处理几十甚至上百人。</li>
+        <li><strong>双面正向</strong>上半页预先转过来，对折之后两面都是正向显示的同一个姓名。</li>
+        <li><strong>虚线可调</strong>夹子有大有小。移动虚线，就确定对折的位置，排版整齐再折进去。</li>
+        <li><strong>快速导出</strong>生成 Word 文档，直接打印，不用先在 Word 里一页页排。</li>
+      </ul>
+    </section>
+
+    <section class="use reveal">
+      <h2>适用场景</h2>
+      <ul class="scenes">
+        <li>企业会议 / 部门例会</li>
+        <li>客户接待 / 商务洽谈</li>
+        <li>培训活动 / 研讨会</li>
+        <li>宴会席位 / 活动签到</li>
+      </ul>
     </section>
 
     <ul class="specs reveal">
@@ -271,6 +323,11 @@
       <li><b>14 厘米</b><span>两个名字中心的相距</span></li>
       <li><b>0.5 厘米</b><span>虚线在字外的距离</span></li>
     </ul>
+
+    <section class="close reveal">
+      <h2>省时、省力、零差错。</h2>
+      <p>让会务准备不再繁琐，把时间留给更重要的事。</p>
+    </section>
 
     <section class="use reveal">
       <h2>怎么用</h2>
