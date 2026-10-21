@@ -4,129 +4,180 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>桌签生成器</title>
-  <meta name="description" content="一份名单，印出所有人的对折桌签。夹子大小不必一样，虚线移到哪里，就从哪里折。">
+  <meta name="description" content="把一份名单印成可对折的 A4 桌签。不用在 Word 里逐个改。虚线可以移动，用来适配不同大小的桌签夹。">
   <style>
     :root {
-      --bg: #f6f3ed;
+      --bg: #f7f4ee;
       --ink: #1c1916;
-      --muted: #5c564f;
-      --line: #e5dcd0;
+      --text: #3a342c;
+      --muted: #6d655c;
+      --line: #e4dacd;
       --stage: #e3d9c8;
-      --green: #1e3a34;
+      --green: #1b3330;
+      --card: #fffdfb;
     }
 
     * { box-sizing: border-box; }
-
     html, body { margin: 0; }
-
     body {
       color: var(--ink);
       background: var(--bg);
       font-family: "Microsoft YaHei UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
     }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; }
 
-    .wrap {
-      width: min(1080px, calc(100% - 80px));
-      margin: 0 auto;
-    }
+    .wrap { width: min(1080px, calc(100% - 72px)); margin: 0 auto; }
 
     header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 84px;
+      gap: 20px;
+      height: 76px;
     }
-
-    .brand {
-      margin: 0;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-    }
-
-    .btn {
-      color: #f6f1e8;
-      background: var(--green);
+    .brand { margin: 0; font-size: 16px; font-weight: 600; letter-spacing: 0.16em; }
+      .nav { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; }
+    .repo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
       text-decoration: none;
       font-size: 14px;
-      padding: 9px 18px;
+    }
+    .repo svg { width: 20px; height: 20px; }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      background: var(--green);
+      color: #f6f1e8;
+      font-size: 14px;
+      padding: 9px 16px;
       border-radius: 999px;
+      white-space: nowrap;
     }
 
     .hero {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 56px;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 48px;
       align-items: center;
-      padding: 28px 0 72px;
+      padding: 18px 0 56px;
     }
-
     h1 {
       margin: 0;
       font-family: SimSun, "Songti SC", "Noto Serif SC", serif;
-      font-size: 60px;
+      font-size: 52px;
       font-weight: 400;
-      line-height: 1.22;
+      line-height: 1.25;
       letter-spacing: 0.03em;
     }
+    .hero p { margin: 18px 0 0; max-width: 28em; color: var(--text); font-size: 17px; }
+    .stage { margin: 0; background: var(--stage); border-radius: 18px; overflow: hidden; }
 
-    .copy p {
-      margin: 20px 0 0;
-      max-width: 24em;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.9;
-    }
-
-    .stage {
-      margin: 0;
-      background: var(--stage);
-      border-radius: 20px;
-      overflow: hidden;
-    }
-
-    .stage img,
-    .frame img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    .label {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: 0.18em;
-    }
-
-    .frame {
-      padding: 10px;
-      background: #fffdfb;
+    .shot {
+      padding: 12px;
+      background: var(--card);
       border-radius: 16px;
-      box-shadow: 0 16px 44px rgba(55, 40, 18, 0.08);
+      box-shadow: 0 14px 40px rgba(55, 40, 18, 0.08);
+    }
+    .shot img { width: 100%; border-radius: 8px; }
+    .caption { margin: 12px 2px 0; color: var(--muted); font-size: 13px; }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 64px;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+    .split p, .use p { margin: 0; color: var(--text); font-size: 16px; }
+    .split p + p { margin-top: 12px; }
+
+    .specs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .specs li {
+      margin: 0;
+      padding: 16px 16px 14px;
+      background: var(--card);
+      border-radius: 12px;
+    }
+    .specs b {
+      display: block;
+      margin-bottom: 4px;
+      font-family: SimSun, "Songti SC", serif;
+      font-size: 22px;
+      font-weight: 400;
+    }
+    .specs span { color: var(--muted); font-size: 13px; }
+
+    .use { margin-top: 64px; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .steps li {
+      margin: 0;
+      padding-top: 14px;
+      border-top: 2px solid var(--green);
+      color: var(--text);
+      font-size: 15px;
+    }
+    .steps em {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--green);
+      font-family: SimSun, "Songti SC", serif;
+      font-style: normal;
+      font-size: 20px;
     }
 
-    .frame img { border-radius: 8px; }
-
-    footer {
+    .oss {
       display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-top: 36px;
-      padding: 22px 0 32px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 13px;
+      align-items: center;
+      gap: 22px;
+      margin: 64px 0 40px;
+      padding: 26px 28px;
+      background: var(--green);
+      color: #f4efe6;
+      border-radius: 16px;
     }
+    .oss svg { width: 42px; height: 42px; flex: none; }
+    .oss .meta { flex: 1; min-width: 0; }
+    .oss .k { margin: 0; font-size: 13px; letter-spacing: 0.16em; opacity: 0.72; }
+    .oss .url {
+      display: inline-block;
+      margin-top: 4px;
+      color: #fff;
+      font-size: 18px;
+      text-decoration: none;
+    }
+    .oss .sub { margin: 4px 0 0; font-size: 13px; opacity: 0.75; }
+    .oss .btn { background: #f4efe6; color: var(--green); }
 
-    footer a { color: inherit; }
-
-    @media (max-width: 800px) {
-      .wrap { width: calc(100% - 36px); }
-      header { height: auto; padding: 22px 0; }
-      .hero { grid-template-columns: 1fr; gap: 28px; padding: 8px 0 40px; }
-      h1 { font-size: 40px; }
+    @media (max-width: 860px) {
+      .wrap { width: calc(100% - 32px); }
+      header { height: auto; padding: 18px 0; align-items: flex-start; flex-direction: column; }
+      .hero, .split, .specs, .steps { grid-template-columns: 1fr; }
+      h1 { font-size: 36px; }
+      .oss { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -134,31 +185,71 @@
   <div class="wrap">
     <header>
       <p class="brand">桌签生成器</p>
-      <a class="btn" href="https://github.com/c01djc/desk-sign/releases/download/v1.0/桌签生成器.exe">下载</a>
+      <div class="nav">
+        <a class="repo" href="https://github.com/c01djc/desk-sign">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          github.com/c01djc/desk-sign
+        </a>
+        <a class="btn" href="https://github.com/c01djc/desk-sign/releases/download/v1.0/桌签生成器.exe">下载</a>
+      </div>
     </header>
 
     <section class="hero">
-      <div class="copy">
-        <h1>一次生成<br>所有人的桌签</h1>
-        <p>不用在 Word 里一个一个改。<br>一份名单，印出所有人的桌签。</p>
-        <p>夹子大小不必一样。虚线移到哪里，就从哪里折。</p>
+      <div>
+        <h1>一份名单，<br>印出所有人的桌签。</h1>
+        <p>开会、接待、培训，桌上要给每人立一块姓名牌。两面都得是正的同一个名字，纸又比透明夹子大。以前在 Word 里给每个人单独改一页，现在把名单放进来，一次生成。</p>
       </div>
       <figure class="stage">
-        <img src="docs/sign.png" alt="立体预览中的粉色桌签">
+        <img src="docs/sign.png" alt="折好放进透明夹后的桌签">
       </figure>
     </section>
 
-    <section>
-      <p class="label">工具</p>
-      <div class="frame">
-        <img src="docs/app.png" alt="桌签生成器窗口">
+    <figure>
+      <div class="shot">
+        <img src="docs/app.png" alt="桌签生成器的窗口，左边是名单和虚线距，右边是打印预览">
+      </div>
+      <figcaption class="caption">生成之前可以看这一页，也可以切换到立体，看纸怎么折进夹子。</figcaption>
+    </figure>
+
+    <section class="split">
+      <div>
+        <h2>印出来是什么样</h2>
+        <p>一页一个人，A4 纵向，页边距为零。上半页的名字旋转 180 度，下半页正着放。沿页中对折后，对面看到的也是正的。</p>
+        <p>姓名外侧有两条灰色虚线，会印出来，那就是折进夹子的位置。页中间的对折痕迹只在预览里，不写进文档。虚线以外不印名字，折进去的是空白。</p>
+      </div>
+      <div>
+        <h2>虚线跟着夹子走</h2>
+        <p>常见的透明桌签夹装不下一整张 A4，夹子还有大有小。把虚线移近或移远，折进去的边就跟着变。虚线在哪里，就从哪里折。</p>
+        <p>名单是一份文本，一行一个名字，UTF-8 和 GBK 都可以。程序直接写成文档，打印即可，不用先打开 Word。</p>
       </div>
     </section>
 
-    <footer>
-      <span>版本 1.0 · 64 位 Windows · 一个程序</span>
-      <a href="https://github.com/c01djc/desk-sign">github.com/c01djc/desk-sign</a>
-    </footer>
+    <ul class="specs">
+      <li><b>宋体</b><span>默认字体，可以改</span></li>
+      <li><b>150 磅</b><span>默认字号</span></li>
+      <li><b>14 厘米</b><span>两个名字中心的相距</span></li>
+      <li><b>0.5 厘米</b><span>虚线在字外的距离</span></li>
+    </ul>
+
+    <section class="use">
+      <h2>怎么用</h2>
+      <ol class="steps">
+        <li><em>一</em>准备一份 txt，一行一个名字。</li>
+        <li><em>二</em>改字体、字号、相距和虚线距，先看这一页会印成什么样。</li>
+        <li><em>三</em>切到立体，看多余的纸沿虚线折进去。拖动可以看另一面。</li>
+        <li><em>四</em>生成文档，打印，沿灰色虚线折好，放进夹子。</li>
+      </ol>
+    </section>
+
+    <section class="oss">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      <div class="meta">
+        <p class="k">开源</p>
+        <a class="url" href="https://github.com/c01djc/desk-sign">github.com/c01djc/desk-sign</a>
+        <p class="sub">MIT 协议 · 版本 1.0 · 64 位 Windows · 一个程序</p>
+      </div>
+      <a class="btn" href="https://github.com/c01djc/desk-sign/releases/download/v1.0/桌签生成器.exe">下载桌签生成器.exe</a>
+    </section>
   </div>
 </body>
 </html>
