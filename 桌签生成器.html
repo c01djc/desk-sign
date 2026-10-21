@@ -7,10 +7,12 @@
   <meta name="description" content="把一份名单做成可对折的 A4 桌签。一次生成所有人的，并按夹子大小调整虚线，确定对折的位置。">
   <style>
     :root {
-      --bg: #f3eee6;
-      --ink: #1a1714;
-      --muted: #5e564e;
-      --line: #ddd4c6;
+      --bg: #f6f3ed;
+      --ink: #1c1916;
+      --muted: #5c564f;
+      --line: #e5dcd0;
+      --stage: #e3d9c8;
+      --green: #1e3a34;
     }
 
     * { box-sizing: border-box; }
@@ -24,141 +26,133 @@
     }
 
     .wrap {
-      width: min(1240px, calc(100% - 96px));
+      width: min(1080px, calc(100% - 80px));
       margin: 0 auto;
     }
 
     header {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-between;
-      padding: 32px 0 0;
+      height: 84px;
     }
 
-    .name {
+    .brand {
       margin: 0;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       letter-spacing: 0.22em;
     }
 
-    .dl {
-      color: var(--ink);
-      font-size: 15px;
-      letter-spacing: 0.08em;
+    .btn {
+      color: #f6f1e8;
+      background: var(--green);
       text-decoration: none;
-      border-bottom: 1px solid var(--ink);
-      padding-bottom: 2px;
+      font-size: 14px;
+      padding: 9px 18px;
+      border-radius: 999px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+      padding: 28px 0 72px;
     }
 
     h1 {
-      margin: 88px 0 0;
-      max-width: 9em;
+      margin: 0;
       font-family: SimSun, "Songti SC", "Noto Serif SC", serif;
-      font-size: clamp(56px, 7vw, 104px);
+      font-size: 60px;
       font-weight: 400;
-      line-height: 1.12;
-      letter-spacing: 0.04em;
+      line-height: 1.22;
+      letter-spacing: 0.03em;
     }
 
-    .lead {
-      margin: 36px 0 0;
-      max-width: 22em;
+    .copy p {
+      margin: 20px 0 0;
+      max-width: 24em;
       color: var(--muted);
-      font-size: 20px;
-      line-height: 1.85;
+      font-size: 16px;
+      line-height: 1.9;
     }
 
-    .shots {
-      display: grid;
-      grid-template-columns: 1.45fr 0.72fr;
-      gap: 36px;
-      align-items: start;
-      margin: 80px 0 0;
+    .stage {
+      margin: 0;
+      background: var(--stage);
+      border-radius: 20px;
+      overflow: hidden;
     }
 
-    figure { margin: 0; }
-
-    img {
+    .stage img,
+    .frame img {
       display: block;
       width: 100%;
       height: auto;
     }
 
-    .tool img {
-      border-radius: 8px;
-      box-shadow: 0 28px 70px rgba(48, 34, 16, 0.16);
-    }
-
-    figcaption {
-      margin-top: 18px;
+    .label {
+      margin: 0 0 14px;
       color: var(--muted);
       font-size: 13px;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.18em;
     }
 
-    .points {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      margin: 96px 0 0;
-      padding-top: 40px;
-      border-top: 1px solid var(--line);
+    .frame {
+      padding: 10px;
+      background: #fffdfb;
+      border-radius: 16px;
+      box-shadow: 0 16px 44px rgba(55, 40, 18, 0.08);
     }
 
-    .points p {
-      margin: 0;
-      font-family: SimSun, "Songti SC", "Noto Serif SC", serif;
-      font-size: clamp(26px, 2.4vw, 34px);
-      line-height: 1.55;
-      letter-spacing: 0.03em;
-    }
+    .frame img { border-radius: 8px; }
 
     footer {
       display: flex;
       justify-content: space-between;
       gap: 16px;
       flex-wrap: wrap;
-      margin: 88px 0 40px;
+      margin-top: 36px;
+      padding: 22px 0 32px;
+      border-top: 1px solid var(--line);
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
     }
 
     footer a { color: inherit; }
 
-    @media (max-width: 860px) {
-      .wrap { width: calc(100% - 40px); }
-      h1 { margin-top: 48px; font-size: 36px; max-width: none; }
-      .shots, .points { grid-template-columns: 1fr; gap: 36px; }
-      .shots { margin-top: 48px; }
-      header { align-items: flex-start; flex-direction: column; gap: 12px; }
+    @media (max-width: 800px) {
+      .wrap { width: calc(100% - 36px); }
+      header { height: auto; padding: 22px 0; }
+      .hero { grid-template-columns: 1fr; gap: 28px; padding: 8px 0 40px; }
+      h1 { font-size: 40px; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <p class="name">桌签生成器</p>
-      <a class="dl" href="https://github.com/c01djc/desk-sign/releases/download/v1.0/桌签生成器.exe">下载程序</a>
+      <p class="brand">桌签生成器</p>
+      <a class="btn" href="https://github.com/c01djc/desk-sign/releases/download/v1.0/桌签生成器.exe">下载</a>
     </header>
 
-    <h1>一份名单，<br>一次生成所有人的桌签。</h1>
-    <p class="lead">把名单做成可对折的 A4。以前在 Word 里逐个改。夹子大小不同，就调整虚线，确定对折的位置。</p>
-
-    <div class="shots">
-      <figure class="tool">
-        <img src="docs/app.png" alt="桌签生成器窗口，左侧是名单和虚线距，右侧是打印预览">
-        <figcaption>工具</figcaption>
+    <section class="hero">
+      <div class="copy">
+        <h1>一次生成<br>所有人的桌签</h1>
+        <p>以前在 Word 里给每个人单独改。现在一份名单，就能做成可对折的 A4。</p>
+        <p>桌签夹有大有小。调整虚线的位置，就确定了对折的地方。</p>
+      </div>
+      <figure class="stage">
+        <img src="docs/sign.png" alt="立体预览中的粉色桌签">
       </figure>
-      <figure class="preview">
-        <img src="docs/sign.png" alt="立体预览里，粉色桌签放在透明夹中">
-        <figcaption>预览</figcaption>
-      </figure>
-    </div>
+    </section>
 
-    <section class="points">
-      <p>一份名单，一次生成所有人的。不用在 Word 里给每个人单独改。</p>
-      <p>桌签夹有大有小。移动虚线，就定了对折的位置。</p>
+    <section>
+      <p class="label">工具</p>
+      <div class="frame">
+        <img src="docs/app.png" alt="桌签生成器窗口">
+      </div>
     </section>
 
     <footer>
