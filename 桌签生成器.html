@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>桌签生成器</title>
-  <meta name="description" content="把一份名单印成可对折的 A4 桌签。不用在 Word 里逐个改。虚线可以移动，用来适配不同大小的桌签夹。">
+  <meta name="description" content="专为会议、接待和培训场景设计，支持批量导入名单，一键生成双面正向显示的桌签，告别在 Word 里逐页手动修改的繁琐操作。">
   <style>
     :root {
       --bg: #f7f4ee;
@@ -57,7 +57,11 @@
       padding: 9px 16px;
       border-radius: 999px;
       white-space: nowrap;
+      transition: transform .25s ease, box-shadow .25s ease;
     }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(27, 51, 48, 0.18); }
+    .repo { transition: color .2s ease; }
+    .repo:hover { color: var(--green); }
 
     .hero {
       display: grid;
@@ -76,13 +80,19 @@
     }
     .hero p { margin: 18px 0 0; max-width: 28em; color: var(--text); font-size: 17px; }
     .stage { margin: 0; background: var(--stage); border-radius: 18px; overflow: hidden; }
+    .hero h1 { animation: rise .7s ease both; }
+    .hero p { animation: rise .7s .12s ease both; }
+    .stage { animation: rise .8s .18s ease both; }
+    .stage img { animation: float 5.5s 1s ease-in-out infinite; }
 
     .shot {
       padding: 12px;
       background: var(--card);
       border-radius: 16px;
       box-shadow: 0 14px 40px rgba(55, 40, 18, 0.08);
+      transition: transform .35s ease, box-shadow .35s ease;
     }
+    .shot:hover { transform: translateY(-4px); box-shadow: 0 22px 48px rgba(55, 40, 18, 0.12); }
     .shot img { width: 100%; border-radius: 8px; }
     .caption { margin: 12px 2px 0; color: var(--muted); font-size: 13px; }
 
@@ -114,7 +124,9 @@
       padding: 16px 16px 14px;
       background: var(--card);
       border-radius: 12px;
+      transition: transform .25s ease, box-shadow .25s ease;
     }
+    .specs li:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(55, 40, 18, 0.08); }
     .specs b {
       display: block;
       margin-bottom: 4px;
@@ -171,6 +183,26 @@
     }
     .oss .sub { margin: 4px 0 0; font-size: 13px; opacity: 0.75; }
     .oss .btn { background: #f4efe6; color: var(--green); }
+    .oss { transition: transform .35s ease; }
+    .oss:hover { transform: translateY(-3px); }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .js .reveal.in {
+      opacity: 1;
+      transform: none;
+      transition: opacity .7s ease, transform .7s ease;
+    }
 
     @media (max-width: 860px) {
       .wrap { width: calc(100% - 32px); }
@@ -179,7 +211,16 @@
       h1 { font-size: 36px; }
       .oss { flex-direction: column; align-items: flex-start; }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      .js .reveal { opacity: 1; transform: none; }
+    }
   </style>
+  <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
   <div class="wrap">
@@ -197,21 +238,21 @@
     <section class="hero">
       <div>
         <h1>一份名单，<br>印出所有人的桌签。</h1>
-        <p>开会、接待、培训，桌上要给每人立一块姓名牌。两面都得是正的同一个名字，纸又比透明夹子大。以前在 Word 里给每个人单独改一页，现在把名单放进来，一次生成。</p>
+        <p>专为会议、接待和培训场景设计，支持批量导入名单，一键生成双面正向显示的桌签，告别在 Word 里逐页手动修改的繁琐操作。</p>
       </div>
       <figure class="stage">
         <img src="docs/sign.png" alt="折好放进透明夹后的桌签">
       </figure>
     </section>
 
-    <figure>
+    <figure class="reveal">
       <div class="shot">
         <img src="docs/app.png" alt="桌签生成器的窗口，左边是名单和虚线距，右边是打印预览">
       </div>
       <figcaption class="caption">生成之前可以看这一页，也可以切换到立体，看纸怎么折进夹子。</figcaption>
     </figure>
 
-    <section class="split">
+    <section class="split reveal">
       <div>
         <h2>印出来是什么样</h2>
         <p>一页一个人，A4 纵向，页边距为零。上半页的名字旋转 180 度，下半页正着放。沿页中对折后，对面看到的也是正的。</p>
@@ -224,14 +265,14 @@
       </div>
     </section>
 
-    <ul class="specs">
+    <ul class="specs reveal">
       <li><b>宋体</b><span>默认字体，可以改</span></li>
       <li><b>150 磅</b><span>默认字号</span></li>
       <li><b>14 厘米</b><span>两个名字中心的相距</span></li>
       <li><b>0.5 厘米</b><span>虚线在字外的距离</span></li>
     </ul>
 
-    <section class="use">
+    <section class="use reveal">
       <h2>怎么用</h2>
       <ol class="steps">
         <li><em>一</em>准备一份 txt，一行一个名字。</li>
@@ -241,7 +282,7 @@
       </ol>
     </section>
 
-    <section class="oss">
+    <section class="oss reveal">
       <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
       <div class="meta">
         <p class="k">开源</p>
@@ -251,5 +292,20 @@
       <a class="btn" href="https://github.com/c01djc/desk-sign/releases/download/v1.0/桌签生成器.exe">下载桌签生成器.exe</a>
     </section>
   </div>
+  <script>
+    var nodes = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) {
+      for (var i = 0; i < nodes.length; i++) nodes[i].classList.add("in");
+    } else {
+      var seen = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("in");
+          seen.unobserve(entry.target);
+        });
+      }, { threshold: 0.16 });
+      for (var j = 0; j < nodes.length; j++) seen.observe(nodes[j]);
+    }
+  </script>
 </body>
 </html>
