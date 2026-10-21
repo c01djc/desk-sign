@@ -6,7 +6,7 @@
 
 下载：[桌签生成器.exe](https://github.com/c01djc/desk-sign/releases/download/v1.0/桌签生成器.exe)（64 位 Windows，一个文件）
 
-开发者 c0ldjc · 版本 1.0 · [MIT](LICENSE)
+版本 1.0 · [MIT](LICENSE)
 
 ## 编译
 
